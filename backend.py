@@ -7,10 +7,10 @@ import mysql.connector
 cgitb.enable()
 
 # Connect to the database
-db_host = "localhost"
-db_user = "username"
-db_pass = "password"
-db_name = "database_name"
+db_host = "http://ipfssearch-server.mysql.database.azure.com"
+db_user = "mrprcsuoxp"
+db_pass = "pass@cs6675db"
+db_name = "ipfs-db"
 conn = mysql.connector.connect(host=db_host, user=db_user, password=db_pass, database=db_name)
 
 # Get the search query from the form
