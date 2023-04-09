@@ -5,7 +5,7 @@ import mysql.connector
 
 # Enable debug mode to display errors in the browser
 cgitb.enable()
-
+#
 # Connect to the database
 db_host = "http://ipfssearch-server.mysql.database.azure.com"
 db_user = "mrprcsuoxp"
