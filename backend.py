@@ -7,7 +7,7 @@ import mysql.connector
 cgitb.enable()
 #
 # Connect to the database
-db_host = "http://ipfssearch-server.mysql.database.azure.com"
+db_host = "ipfs-server.mysql.database.azure.com"
 db_user = "mrprcsuoxp"
 db_pass = "pass@cs6675db"
 db_name = "ipfs-db"
@@ -18,7 +18,7 @@ form = cgi.FieldStorage()
 search = form.getvalue('search')
 
 # Query the database
-sql = "SELECT * FROM table_name WHERE column_name LIKE '%{}%'".format(search)
+sql = "SELECT * FROM keywords WHERE keyword LIKE '%{}%'".format(search)
 cursor = conn.cursor()
 cursor.execute(sql)
 results = cursor.fetchall()
