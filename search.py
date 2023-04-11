@@ -18,7 +18,8 @@ form = cgi.FieldStorage()
 search = form.getvalue('search')
 
 # Query the database
-sql = "SELECT * FROM keywords WHERE keyword LIKE '%{}%'".format(search)
+#sql = "SELECT * FROM keywords WHERE keyword LIKE '%{}%'".format(search)
+sql="SELECT * FROM keywords"
 cursor = conn.cursor()
 cursor.execute(sql)
 results = cursor.fetchall()
