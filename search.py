@@ -11,7 +11,7 @@ db_host = "ipfs-server.mysql.database.azure.com"
 db_user = "mrprcsuoxp"
 db_pass = "pass@cs6675db"
 db_name = "ipfs-db"
-conn = mysql.connector.connect(user=db_user, password=db_pass, host=db_host, database=db_name, ssl_ca="DigiCertGlobalRootCA.crt.pem", ssl_disabled=False)
+conn = mysql.connector.connect(user=db_user, password=db_pass, host=db_host, database=db_name)
 
 # Get the search query from the form
 form = cgi.FieldStorage()
