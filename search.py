@@ -1,52 +1,49 @@
-#!/usr/bin/env python
+'#!/usr/bin/env python3'
 import cgi
 import cgitb
 import mysql.connector
 
 # Enable debug mode to display errors in the browser
 cgitb.enable()
-#
+from flask import Flask, request, render_template
+#from search import search_logic
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/search', methods=['POST'])
+def search():
+    # Get user input from form
+    query = request.form['query']
+
+    # Call search logic from search.py
+    results = search_logic(query)
+
+    # Return search results
+    return render_template('results.html', results=results)
+
+def search_logic(query):
+    db_host = "ipfs-server.mysql.database.azure.com"
+    db_user = "mrprcsuoxp"
+    db_pass = "pass@cs6675db"
+    db_name = "ipfs-db"
+    conn = mysql.connector.connect(user=db_user, password=db_pass, host=db_host, database=db_name)
+    #sql="SELECT * FROM keywords WHERE keyword LIKE apple"
+    sql="SELECT * FROM keywords WHERE keyword LIKE '%{}%'".format(query)
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return results
+if __name__ == '__main__':
+    app.run(debug=True)
+
 # Connect to the database
-db_host = "ipfs-server.mysql.database.azure.com"
-db_user = "mrprcsuoxp"
-db_pass = "pass@cs6675db"
-db_name = "ipfs-db"
-conn = mysql.connector.connect(user=db_user, password=db_pass, host=db_host, database=db_name)
 
-# Get the search query from the form
-form = cgi.FieldStorage()
-search = form.getvalue('search')
 
-# Query the database
-#sql = "SELECT * FROM keywords WHERE keyword LIKE '%{}%'".format(search)
-sql="SELECT * FROM keywords"
-cursor = conn.cursor()
-cursor.execute(sql)
-results = cursor.fetchall()
 
-# Print the results as an HTML table
-print("Content-Type: text/html")
-print()
-print("<!DOCTYPE html>")
-print("<html>")
-print("<head>")
-print("<title>Search Results</title>")
-print("</head>")
-print("<body>")
-print("<h1>Search Results</h1>")
-if results:
-    print("<table>")
-    for row in results:
-        print("<tr>")
-        for col in row:
-            print("<td>{}</td>".format(col))
-        print("</tr>")
-    print("</table>")
-else:
-    print("<p>No results found.</p>")
-print("</body>")
-print("</html>")
 
-# Close the database connection
-cursor.close()
-conn.close()
